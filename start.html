@@ -34,7 +34,7 @@
 <button type="button" id="remove" class="btn btn-danger">Delete Table</button>
 
 <button type="button" id="list" class="btn btn-success">Fetch Record</button>
-<p><small><b>Note:</b> Table must be created first before inserting or performing any transaction</small></p>
+<p><small><b>Note:</b> Table must be created first before inserting or performing any insertion</small></p>
 	</fieldset>
 </form>
 
@@ -75,7 +75,7 @@ db.transaction(function(transaction){
 	transaction.executeSql(sql,undefined,function(){
 		alert("Table is created successfully");
 	},function(){
-		alert("Table is already being created");
+		alert("Table has already been created");
 	})
 });
 });
@@ -90,7 +90,7 @@ if(!confirm("Are you sure to delete this table?","")) return;;
 db.transaction(function(transaction){
 	var sql="DROP TABLE items";
 	transaction.executeSql(sql,undefined,function(){
-		alert("Table is deleted successfully")
+		alert("Table deleted successfully")
 	},function(transaction,err){
 		alert(err.message);
 	})
@@ -140,7 +140,7 @@ for(var i=0;i<result.rows.length;i++){
 	$("#itemlist").append('<tr id="del'+id+'"><td>'+id+'</td><td>'+item+'</td><td id="newqty'+id+'">'+quantity+'</td><td><a href="#" class="btn btn-danger deleteitem" data-id="'+id+'">Delete</a> <a href="#" class="btn btn-primary updateitem" data-id="'+id+'">Update</a></td></tr>');
 }
 }else{
-	$("#itemlist").append('<tr><td colspan="3" align="center">No Item Found</td></tr>');
+	$("#itemlist").append('<tr><td colspan="3" align="center">No Question Found</td></tr>');
 }
 		},function(transaction,err){
 			alert('No table found. Click on "Create Table" to create table now');
@@ -154,7 +154,7 @@ for(var i=0;i<result.rows.length;i++){
 
 setTimeout(function(){
 	$(".deleteitem").click(function(){
-var sure=confirm("Are you sure to delete this item?");
+var sure=confirm("Are you sure to delete this question?");
 if(sure===true){
 	var id=$(this).data("id");
 db.transaction(function(transaction){
@@ -170,14 +170,14 @@ transaction.executeSql(sql,[id],function(){
 })
 
 $(".updateitem").click(function(){
-var qty=prompt("Kindly enter new quantity",1);
+var qty=prompt("Kindly enter new answer",1);
 if(qty!==null){
 	var id=$(this).data("id");
 db.transaction(function(transaction){
 var sql="UPDATE items SET quantity=? where id=?";
 transaction.executeSql(sql,[qty,id],function(){
 	$("#newqty"+id).html(qty);
-	alert("Item is updated successfully");
+	alert("Answeris updated successfully");
 },function(transaction,err){
 	alert(err.message);
 })
